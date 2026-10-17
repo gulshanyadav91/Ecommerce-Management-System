@@ -1,0 +1,17 @@
+[
+    {
+        "membership": "Gold",
+        "minimum_purchase": 5000,
+        "discount_percent": 10
+    },
+    {
+        "membership": "Silver",
+        "minimum_purchase": 8000,
+        "discount_percent": 5
+    },
+    {
+        "membership": "Bronze",
+        "minimum_purchase": 10000,
+        "discount_percent": 3
+    }
+]

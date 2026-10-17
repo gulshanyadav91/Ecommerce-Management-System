@@ -1,0 +1,9 @@
+order_id,customer_id,product_id,quantity,order_date,payment_method,order_status
+5001,101,P101,1,2026-09-01,UPI,Delivered
+5002,102,P102,2,2026-09-02,Card,Delivered
+5003,103,P103,1,2026-09-03,Cash,Cancelled
+5004,104,P104,2,2026-09-04,UPI,Delivered
+5005,101,P106,3,2026-09-05,Card,Delivered
+5006,105,P105,10,2026-09-06,UPI,Delivered
+5007,106,P101,2,2026-09-07,Card,Cancelled
+5008,103,P102,4,2026-09-08,Cash,Delivered

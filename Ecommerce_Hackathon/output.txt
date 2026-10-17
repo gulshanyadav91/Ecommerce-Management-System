@@ -1,0 +1,255 @@
+
+=== TASK 1: LOAD AND INSPECT ===
+Number of customers: 6
+Number of products: 6
+Number of orders: 8
+Unique cities: 4
+Product categories: 3
+
+Customers shape: (6, 6)
+Products shape: (6, 5)
+Orders shape: (8, 7)
+
+First five customers:
+    customer_id   name     city  state  age membership
+0          101  Rahul   Kanpur     UP   22       Gold
+1          102  Priya    Delhi  Delhi   28     Silver
+2          103   Aman  Lucknow     UP   25       Gold
+3          104   Neha   Kanpur     UP   31     Bronze
+4          105  Arjun    Noida     UP   24     Silver
+
+First five orders:
+    order_id  customer_id product_id  ...  order_date payment_method order_status
+0      5001          101       P101  ...  2026-09-01            UPI    Delivered
+1      5002          102       P102  ...  2026-09-02           Card    Delivered
+2      5003          103       P103  ...  2026-09-03           Cash    Cancelled
+3      5004          104       P104  ...  2026-09-04            UPI    Delivered
+4      5005          101       P106  ...  2026-09-05           Card    Delivered
+
+[5 rows x 7 columns]
+
+Discount rules:
+ [
+  {
+    "membership": "Gold",
+    "minimum_purchase": 5000,
+    "discount_percent": 10
+  },
+  {
+    "membership": "Silver",
+    "minimum_purchase": 8000,
+    "discount_percent": 5
+  },
+  {
+    "membership": "Bronze",
+    "minimum_purchase": 10000,
+    "discount_percent": 3
+  }
+]
+
+=== TASK 2: DATA INTEGRATION ===
+Rows in orders before merging: 8
+Rows after merging: 8
+Orders missing customer information: 0
+Orders missing product information: 0
+
+Merged dataset preview:
+    order_id  customer_id product_id  ...  price stock gross_amount
+0      5001          101       P101  ...  55000    10        55000
+1      5002          102       P102  ...   1200    50         2400
+2      5003          103       P103  ...   4500    20         4500
+3      5004          104       P104  ...   9000     8        18000
+4      5005          101       P106  ...   2500    30         7500
+
+[5 rows x 17 columns]
+
+=== TASK 3: DATA CLEANING AND VALIDATION ===
+
+Missing values by column:
+ order_id          0
+customer_id       0
+product_id        0
+quantity          0
+order_date        0
+payment_method    0
+order_status      0
+name              0
+city              0
+state             0
+age               0
+membership        0
+product_name      0
+category          0
+price             0
+stock             0
+gross_amount      0
+dtype: int64
+Duplicate order IDs: 0
+Invalid quantity rows: 0
+Invalid price rows: 0
+Unique order statuses: ['Delivered', 'Cancelled']
+Unique payment methods: ['UPI', 'Card', 'Cash']
+Rows after duplicate removal and validation: 8
+Delivered sales total (cancelled orders contribute zero): 92700.0
+
+=== TASK 4: NUMPY STATISTICAL ANALYSIS ===
+total_sales: 92700.00
+average_order_value: 11587.50
+median_order_value: 4900.00
+order_value_std_dev: 17265.89
+maximum_order_value: 55000.00
+minimum_order_value: 0.00
+average_quantity_per_order: 3.12
+
+=== TASK 5: DISCOUNT ELIGIBILITY ===
+   order_id membership  ...  discount_amount final_amount
+0      5001       Gold  ...           5500.0      49500.0
+1      5002     Silver  ...              0.0       2400.0
+2      5003       Gold  ...              0.0          0.0
+3      5004     Bronze  ...            540.0      17460.0
+4      5005       Gold  ...            750.0       6750.0
+
+[5 rows x 7 columns]
+
+=== TASK 6: CUSTOMER SEGMENTATION ===
+
+Customers per segment:
+ customer_segment
+Low Value     5
+High Value    1
+Name: count, dtype: int64
+
+Average spending by segment:
+ customer_segment
+High Value    56250.0
+Low Value      5932.0
+Name: total_spending, dtype: float64
+City with highest average customer spending: Kanpur ( 36855.0 )
+
+=== TASK 7: BUSINESS ANALYTICS ===
+
+Top 5 customers by final spending:
+    customer_id   name     city  final_amount
+0          101  Rahul   Kanpur       56250.0
+3          104   Neha   Kanpur       17460.0
+4          105  Arjun    Noida        5000.0
+2          103   Aman  Lucknow        4800.0
+1          102  Priya    Delhi        2400.0
+
+Top 5 products by sales:
+   product_id product_name     category  sales_amount
+0       P101       Laptop  Electronics       55000.0
+3       P104         Desk    Furniture       18000.0
+5       P106   Headphones  Electronics        7500.0
+1       P102        Mouse  Electronics        7200.0
+4       P105         Book   Stationery        5000.0
+
+Category-wise sales:
+       category  total_sales  average_sales
+0  Electronics      69700.0        13940.0
+1    Furniture      18000.0         9000.0
+2   Stationery       5000.0         5000.0
+
+City-wise sales:
+       city  total_sales  average_sales
+1   Kanpur      80500.0   26833.333333
+3    Noida       5000.0    5000.000000
+2  Lucknow       4800.0    2400.000000
+0    Delhi       2400.0    1200.000000
+
+Best-performing category: Electronics
+Most frequently ordered product: Book
+Highest-value order:
+ order_id                           5001
+customer_id                         101
+product_id                         P101
+quantity                              1
+order_date          2026-09-01 00:00:00
+payment_method                      UPI
+order_status                  Delivered
+name                              Rahul
+city                             Kanpur
+state                                UP
+age                                  22
+membership                         Gold
+product_name                     Laptop
+category                    Electronics
+price                             55000
+stock                                10
+gross_amount                      55000
+sales_amount                    55000.0
+discount_status                Eligible
+discount_percent                   10.0
+discount_amount                  5500.0
+final_amount                    49500.0
+Name: 0, dtype: object
+Cancelled order percentage: 25.00%
+
+=== TASK 8: SQLITE DATABASE ===
+
+SQL 1 - Customer + Order JOIN:
+
+    name     city  order_id product_id  sales_amount
+0  Rahul   Kanpur      5001       P101       55000.0
+1  Priya    Delhi      5002       P102        2400.0
+2   Aman  Lucknow      5003       P103           0.0
+3   Neha   Kanpur      5004       P104       18000.0
+4  Rahul   Kanpur      5005       P106        7500.0
+5  Arjun    Noida      5006       P105        5000.0
+6   Sana    Delhi      5007       P101           0.0
+7   Aman  Lucknow      5008       P102        4800.0
+
+SQL 2 - Category Sales:
+
+      category  total_sales
+0  Electronics      69700.0
+1    Furniture      18000.0
+2   Stationery       5000.0
+
+SQL 3 - Customers with sales above 50000:
+
+   customer_id   name  total_sales
+0          101  Rahul      62500.0
+
+SQL 4 - Products never ordered:
+
+Empty DataFrame
+Columns: [product_id, product_name]
+Index: []
+
+SQL 5 - Customers without orders:
+
+Empty DataFrame
+Columns: [customer_id, name]
+Index: []
+
+SQL 6 - Average order value by city:
+
+      city  average_order_value
+0   Kanpur         26833.333333
+1    Noida          5000.000000
+2  Lucknow          2400.000000
+3    Delhi          1200.000000
+Database created: C:\COLLEGE WORK\PySpark Project 1\Ecommerce_Hackathon\ecommerce_intelligence.db
+
+=== TASK 9: VISUALIZATION ===
+Saved: C:\COLLEGE WORK\PySpark Project 1\Ecommerce_Hackathon\category_sales.png
+Saved: C:\COLLEGE WORK\PySpark Project 1\Ecommerce_Hackathon\customer_segments.png
+
+=== TASK 10: MANAGEMENT REPORT ===
+{
+    "total_customers": 6,
+    "total_products": 6,
+    "total_orders": 8,
+    "total_sales": 92700.0,
+    "average_order_value": 11587.5,
+    "top_customer": "Rahul",
+    "best_category": "Electronics",
+    "highest_value_order": 5001,
+    "cancelled_order_percentage": 25.0,
+    "premium_customers": 0
+}
+Saved: C:\COLLEGE WORK\PySpark Project 1\Ecommerce_Hackathon\management_report.json
+
+All tasks completed.
+Generated files: ecommerce_intelligence.db, management_report.json, category_sales.png, customer_segments.png, output.txt

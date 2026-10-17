@@ -1,0 +1,12 @@
+{
+    "total_customers": 6,
+    "total_products": 6,
+    "total_orders": 8,
+    "total_sales": 92700.0,
+    "average_order_value": 11587.5,
+    "top_customer": "Rahul",
+    "best_category": "Electronics",
+    "highest_value_order": 5001,
+    "cancelled_order_percentage": 25.0,
+    "premium_customers": 0
+}
